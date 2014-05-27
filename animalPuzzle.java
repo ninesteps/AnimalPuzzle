@@ -15,16 +15,18 @@ public class animalPuzzle{
 
 	
 	private static int numberOfPlacements(Piece piece, Piece[][] puzzle){
-		piece.setTimesRotated(0);
+		 Piece left,right,up,down;
 		for(int i = 0; i < puzzle.length; i++){
 			for (int j = 0; j < puzzle[0].length; j++){
 				if(puzzle[i][j]==Null){ // every empty piece
 					
 					if(!puzzle[i+1][j]==Null || !puzzle[i-1][j]==Null //If atleast one neighbour
 					|| !puzzle[i][j-1]==Null || !puzzle[i][j+1]==Null){ // Is full
-						for(int side = 0; side < piece.getNSides(); side++){
+						for(int rotation = 0; rotation < piece.getNSides(); rotation++){
 						
-							if(piece[side].equals
+							
+							if(piece.side[0].equals(puzzle[i][j+1].side[2]) && //bottom side == top
+
 
 
 	}

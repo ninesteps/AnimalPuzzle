@@ -1,6 +1,6 @@
 public class Piece {
 	int id;
-	Side[] side;
+	public Side[] side;
 	private int nSides;
 	private int noOfPlaces;
 	private int timesRotated
