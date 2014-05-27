@@ -1,5 +1,6 @@
 
 public class animalPuzzle{
+	Arraylist<Piece> puzzlepieces = new ArrayList<Piece>();
 
 	private static int numberOfPlacements(Piece piece){
 		int count = 0;
