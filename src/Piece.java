@@ -1,26 +1,37 @@
+import java.util.ArrayList;
+
 public class Piece {
 	int id;
 	public Side[] side;
 	private int nSides;
 	private int noOfPlaces;
-	private int timesRotated
+	private int timesRotated;
 	
 
-	public static int getNSides(){
+	public int getNSides(){
 		return nSides;
 	}
 
-	public static int getNoOfPlaces(){
+    public void rotate(){
+        Side temp = side[nSides - 1];
+        for(int i = nSides -1; i>0; i--){
+            side[i] = side[i-1];
+        }
+        side[0] = temp;
+    }
+
+	public int getNoOfPlaces(){
 		return noOfPlaces;
 	}
-	public static void setNoOfPlaces(int noOfPlaces){
-		noOfPlaces = this.noOfPlaces;
+
+	public void setNoOfPlaces(int noOfPlaces){
+		this.noOfPlaces = noOfPlaces;
 	}
 
-	public static void setTimesRotated(int times){//Set times rotated clockwise
+	public void setTimesRotated(int times){//Set times rotated clockwise
 		timesRotated = times;
 	}
-	public static int getTimesRotated(){
+	public int getTimesRotated(){
 		return timesRotated;
 	}
 

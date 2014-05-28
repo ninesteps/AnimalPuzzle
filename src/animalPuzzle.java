@@ -1,51 +1,65 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 public class animalPuzzle{
 	static private Comparator<Piece> ascPlacements;
-	static Arraylist<Piece> puzzlepieces = new ArrayList<Piece>();
-	static Boolean success = false;	
+	static ArrayList<Piece> puzzlepieces = new ArrayList<Piece>();
+    static Piece[][] winner;
 	static {
-		asPlacements = new Comparator<Piece>(){
+		ascPlacements = new Comparator<Piece>(){
 			@Override
 			public int compare(Piece p1, Piece p2){
-				return p1.getNoOfPlaces().compareTo(p2.getNoOfPlaces());
+				return (p2.getNoOfPlaces()) -  p1.getNoOfPlaces();
 			}
 		};
 	}
 
 	
 	private static int numberOfPlacements(Piece piece, Piece[][] puzzle){
-		 Piece left,right,up,down;
+        int count = 0;
 		for(int i = 0; i < puzzle.length; i++){
 			for (int j = 0; j < puzzle[0].length; j++){
-				if(puzzle[i][j]==Null){ // every empty piece
+				if(puzzle[i][j]==null){ // every empty piece
 					
-					if(!puzzle[i+1][j]==Null || !puzzle[i-1][j]==Null //If atleast one neighbour
-					|| !puzzle[i][j-1]==Null || !puzzle[i][j+1]==Null){ // Is full
-						for(int rotation = 0; rotation < piece.getNSides(); rotation++){
-						
+					if(!(puzzle[i+1][j]==null) || !(puzzle[i-1][j]==null) //If atleast one neighbour
+					|| !(puzzle[i][j-1]==null) || !(puzzle[i][j+1]==null)){ // Is full
+
+						for(int rotation = 0; rotation < piece.getNSides(); rotation++){ //for every rotation
+						    piece.rotate();
 							
-							if(piece.side[0].equals(puzzle[i][j+1].side[2]) && //bottom side == top
+							if((piece.side[0].equals(puzzle[i][j+1].side[2])) && //bottom side == top
+                              (piece.side[1].equals(puzzle[i-1][j].side[3])) && //left side == right
+                              (piece.side[2].equals(puzzle[i][j-1].side[0])) && //top side == bottom
+                              (piece.side[3].equals(puzzle[i+1][j].side[1]))) { //right side == left
 
+                                count++;
 
-
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return count;
 	}
 
 
 	private static Piece[][] place (Piece piece, Piece[][] puzzle){
-		
+		return puzzle;
 	}
 
 
-	private static Boolean solve(Piece[][] puzzle){
+	private static boolean solve(Piece[][] puzzle){
 		int totalplacements;
 		Piece tempPiece;
 		if (puzzlepieces.isEmpty()){
+            winner = puzzle;
 			return true; // Success
 		}
 
 		totalplacements = 0;
-		for (piece : puzzlepieces){
+		for (Piece piece : puzzlepieces){
 			piece.setNoOfPlaces(numberOfPlacements(piece,puzzle));
 			totalplacements += numberOfPlacements(piece,puzzle);//
 		}			
@@ -58,11 +72,11 @@ public class animalPuzzle{
 
 		tempPiece = puzzlepieces.remove(0);
 		
-		
-		for (int i = 0; i < tempPiece.getNoOfPlaces(); i++){ //needs to solve for certain rotations too
-		if(solve(place(tempPiece,puzzle,i))){
+
+		if(solve(place(tempPiece,puzzle))){
 			return true; 
 		}
+
 		puzzlepieces.add(tempPiece);
 		return false;
 	}
