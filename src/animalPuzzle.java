@@ -141,7 +141,7 @@ public class animalPuzzle{
 
 		totalplacements = 0;
 		for (Piece piece : puzzlepieces){
-            piece.setNoOfPlaces(numberOfPlacements(piece,puzzle));
+            piece.setNoOfPlaces(numberOfPlacements(piece, puzzle));
 			totalplacements += numberOfPlacements(piece,puzzle);//
 		}			
 		
@@ -171,8 +171,8 @@ public class animalPuzzle{
                 if(!(puzzle[i][j]==null)){
                     if(!(puzzle[i][j-1]==null)) up=puzzle[i][j-1];
                     if(!(puzzle[i][j+1]==null)) down=puzzle[i][j+1];
-                    if(!(puzzle[i-1][j]==null)) left=puzzle[i][j-1];
-                    if(!(puzzle[i+1][j]==null)) right=puzzle[i][j-1];
+                    if(!(puzzle[i-1][j]==null)) left=puzzle[i-1][j];
+                    if(!(puzzle[i+1][j]==null)) right=puzzle[i+1][j];
 
 
 
@@ -184,7 +184,8 @@ public class animalPuzzle{
                             (down==null?"":puzzle[i][j].side[0] + " ") +
                             (left==null?"":puzzle[i][j].side[1] + " ") +
                             (up==null?"":puzzle[i][j].side[2] + " ") +
-                            (right==null?"":puzzle[i][j].side[3] + " "));
+                            (right==null?"":puzzle[i][j].side[3] + " ")); 
+                    up=null;down=null;left=null;right=null;
 
                 }
             }
@@ -194,7 +195,7 @@ public class animalPuzzle{
 
 
 	public static void main(String[] args) throws IOException{
-		Scanner sc = new Scanner(new File("inputsquares.txt"));
+		Scanner sc = new Scanner(System.in);
         Piece[][] puzzle = new Piece[100][100];
         while(sc.hasNextLine()){
             ArrayList<Side> some_sides = new ArrayList<Side>();
