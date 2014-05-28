@@ -45,8 +45,35 @@ public class animalPuzzle{
 	}
 
 
-	private static Piece[][] place (Piece piece, Piece[][] puzzle){
-		return puzzle;
+	private static boolean place (Piece piece, Piece[][] puzzle){
+        for(int i = 0; i < puzzle.length; i++){
+            for (int j = 0; j < puzzle[0].length; j++){
+                if(puzzle[i][j]==null){ // every empty piece
+
+                    if(!(puzzle[i+1][j]==null) || !(puzzle[i-1][j]==null) //If atleast one neighbour
+                            || !(puzzle[i][j-1]==null) || !(puzzle[i][j+1]==null)){ // Is full
+
+                        for(int rotation = 0; rotation < piece.getNSides(); rotation++){ //for every rotation
+                            piece.rotate();
+
+                            if((piece.side[0].equals(puzzle[i][j+1].side[2])) && //bottom side == top
+                                    (piece.side[1].equals(puzzle[i-1][j].side[3])) && //left side == right
+                                    (piece.side[2].equals(puzzle[i][j-1].side[0])) && //top side == bottom
+                                    (piece.side[3].equals(puzzle[i+1][j].side[1]))) { //right side == left
+
+                                        puzzle[i][j] = piece;
+                                        if(solve(puzzle)){
+                                            return true;
+                                        }
+
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+		return false;
 	}
 
 
@@ -73,7 +100,7 @@ public class animalPuzzle{
 		tempPiece = puzzlepieces.remove(0);
 		
 
-		if(solve(place(tempPiece,puzzle))){
+		if(place(tempPiece,puzzle)){
 			return true; 
 		}
 
